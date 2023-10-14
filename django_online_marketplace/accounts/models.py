@@ -44,7 +44,7 @@ class User(AbstractBaseUser):
     username = models.CharField(max_length=50,unique=True)
     email=models.EmailField(max_length=100,unique=True)
     phone_number = models.CharField(max_length=20, blank=True)
-    role = models.PositiveIntegerField(choices=ROLE_CHOICE, blank=True, null=True)
+    role = models.PositiveSmallIntegerField(choices=ROLE_CHOICE, blank=True, null=True)
 
 
     date_joined = models.DateTimeField(auto_now_add=True)
@@ -67,7 +67,7 @@ class User(AbstractBaseUser):
     def has_perm(self,perm,ob=None):
         return self.is_admin
 
-    def has_module_perms(selfself,app_label):
+    def has_module_perms(self,app_label):
         return True
 
 class UserProfile(models.Model):

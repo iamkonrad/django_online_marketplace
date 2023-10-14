@@ -1,7 +1,9 @@
 
 
 
+
+
 ROLE_CHOICE = (
-    ('SELLER', 'Seller'),
-    ('CUSTOMER', 'Customer'),
-)
+    ('1', 'Vendor'),
+    ('2', 'Customer'),
+    )
