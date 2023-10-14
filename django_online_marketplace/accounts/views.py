@@ -3,7 +3,6 @@ from .forms import UserForm
 from .models import User
 
 
-
 def registeruser(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
