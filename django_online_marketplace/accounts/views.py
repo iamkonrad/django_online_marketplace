@@ -7,7 +7,10 @@ from django.contrib import messages, auth
 
 
 def registeruser(request):
-    if request.method == 'POST':
+    if request.user.is_authenticated:
+        messages.warning(request, 'You are already registered!')
+        return redirect('dashboard')
+    elif request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid():
             first_name = form.cleaned_data['first_name']
@@ -33,7 +36,10 @@ def registeruser(request):
 
 
 def registervendor(request):
-    if request.method =='POST':
+    if request.user.is_authenticated:
+        messages.warning(request, 'You are already registered!')
+        return redirect('dashboard')
+    elif request.method =='POST':
         form = UserForm(request.POST)
         vendor_form = VendorForm(request.POST, request.FILES)
         if form.is_valid() and vendor_form.is_valid:
@@ -70,7 +76,10 @@ def registervendor(request):
 
 
 def login (request):
-    if request.method =='POST':
+    if request.user.is_authenticated:
+        messages.warning(request, 'You are already logged-in.')
+        return redirect('dashboard')
+    elif request.method =='POST':
         email = request.POST['email']
         password = request.POST['password']
 
