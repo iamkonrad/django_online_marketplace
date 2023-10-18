@@ -50,7 +50,7 @@ def registervendor(request):
             password = form.cleaned_data['password']
             user = User.objects.create_user(first_name=first_name, last_name=last_name, username=username, email=email,
                                             password=password)
-            user.role = 1
+            user.role = 'Vendor'
             user.save()
             vendor = vendor_form.save(commit=False)
             vendor.user = user
