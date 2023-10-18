@@ -1,5 +1,4 @@
 from django.db import models
-from .choices import ROLE_CHOICE
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 
@@ -39,6 +38,13 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
+    VENDOR = 1
+    CUSTOMER = 2
+
+    ROLE_CHOICE = (
+        (VENDOR, 'Vendor'),
+        (CUSTOMER, 'Customer'),
+    )
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
     username = models.CharField(max_length=50,unique=True)

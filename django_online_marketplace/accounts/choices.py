@@ -1,12 +1,12 @@
 
 
 
-VENDOR = 1
-CUSTOMER = 2
+#VENDOR = 1
+#CUSTOMER = 2
 
-ROLE_CHOICE = (
+#ROLE_CHOICE = (
 
 
-    ('1', 'Vendor'),
-    ('2', 'Customer'),
-    )
+#    ('1', 'Vendor'),
+#    ('2', 'Customer'),
+#    )
