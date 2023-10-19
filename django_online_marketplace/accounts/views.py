@@ -6,7 +6,7 @@ from django.utils.http import urlsafe_base64_decode
 
 from vendor.forms import VendorForm
 from .forms import UserForm
-from .utils import detectuser, send_verification_email
+from .utils import detectuser, send_verification_email, send_password_reset_email
 from .models import User, UserProfile
 from django.contrib import messages, auth
 
@@ -153,6 +153,20 @@ def vendordashboard (request):
     return render (request, 'accounts/vendordashboard.html')
 
 def forgot_password(request):
+    if request.method =='POST':
+        email = request.POST['email']
+
+        if User.objects.filter(email=email).exists():
+            user = User.objects.get(email__exact=email)
+
+            send_password_reset_email(request,user)
+
+            messages.success(request, 'Reset link has been sent to you.')
+            return redirect('login')
+        else:
+            messages.error(request, 'Account not found.')
+            return redirect('forgot_password')
+
     return render(request, 'accounts/forgot_password.html')
 
 def reset_password_validate(request,uidb64, token):
