@@ -3,7 +3,7 @@ from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, redirect
 from vendor.forms import VendorForm
 from .forms import UserForm
-from .utils import detectuser
+from .utils import detectuser, send_verification_email
 from .models import User, UserProfile
 from django.contrib import messages, auth
 
@@ -36,6 +36,9 @@ def registeruser(request):
                                             password=password)
             user.role = User.CUSTOMER
             user.save()
+
+
+            send_verification_email(request,user)                                                                       #Verification email
             messages.success(request, 'Your account has been successfully registered.')
             return redirect('registeruser')
         else:
@@ -71,6 +74,8 @@ def registervendor(request):
             user_profile = UserProfile.objects.get(user=user)
             vendor.user_profile = user_profile
             vendor.save()
+
+            send_verification_email(request, user)
             messages.success(request, 'Your vendor account has been successfully registered.')
             return redirect('registervendor')
         else:
@@ -88,7 +93,8 @@ def registervendor(request):
 
     return render (request, 'accounts/registervendor.html', context)
 
-
+def activate_user(request,uidb64, token):
+    return
 def login (request):
     if request.user.is_authenticated:
         messages.warning(request, 'You are already logged-in.')
