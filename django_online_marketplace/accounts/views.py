@@ -152,3 +152,11 @@ def customerdashboard (request):
 def vendordashboard (request):
     return render (request, 'accounts/vendordashboard.html')
 
+def forgot_password(request):
+    return render(request, 'accounts/forgot_password.html')
+
+def reset_password_validate(request,uidb64, token):
+    return
+
+def reset_password(request):
+    return render(request, 'accounts/reset_password.html')
