@@ -161,5 +161,7 @@ EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
 #EMAIL_HOST_USER =        #Your gmail address
 #EMAIL_HOST_PASSWORD =     #Your app password
 #EMAIL_USE_TLS = True
+#DEFAULT_FROM_EMAIL =    'your intended name        <your smtp email address goes here>'
+
 
 #Possible space below for adding PayPal integration if needed
