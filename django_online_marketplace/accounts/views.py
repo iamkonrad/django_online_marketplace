@@ -6,7 +6,7 @@ from django.utils.http import urlsafe_base64_decode
 
 from vendor.forms import VendorForm
 from .forms import UserForm
-from .utils import detectuser, send_verification_email, send_password_reset_email
+from .utils import detectuser, send_verification_email
 from .models import User, UserProfile
 from django.contrib import messages, auth
 
@@ -40,8 +40,9 @@ def registeruser(request):
             user.role = User.CUSTOMER
             user.save()
 
-
-            send_verification_email(request,user)                                                                       #Verification email
+            mail_subject = 'Please activate your account'
+            email_template = 'accounts/emails/account_verification_email.html'
+            send_verification_email(request,user, mail_subject, email_template)                                         #Verification email
             messages.success(request, 'Your account has been successfully registered.')
             return redirect('registeruser')
         else:
@@ -78,7 +79,9 @@ def registervendor(request):
             vendor.user_profile = user_profile
             vendor.save()
 
-            send_verification_email(request, user)
+            mail_subject = 'Please activate your account'
+            email_template = 'accounts/emails/account_verification_email.html'
+            send_verification_email(request,user, mail_subject, email_template)                                         #Verification email
             messages.success(request, 'Your vendor account has been successfully registered.')
             return redirect('registervendor')
         else:
@@ -159,7 +162,9 @@ def forgot_password(request):
         if User.objects.filter(email=email).exists():
             user = User.objects.get(email__exact=email)
 
-            send_password_reset_email(request,user)
+            mail_subject = 'Password reset'
+            email_template = 'accounts/emails/reset_password_email.html'
+            send_verification_email(request,user, mail_subject, email_template)
 
             messages.success(request, 'Reset link has been sent to you.')
             return redirect('login')
