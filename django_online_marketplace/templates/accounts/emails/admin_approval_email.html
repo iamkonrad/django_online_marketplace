@@ -1,0 +1,12 @@
+{% autoescape off %}
+
+    Hello: {{user.first_name}},
+
+    {% if is_approved %}
+    You are now allowed to operate on our platform.
+    {% else %}
+    You are not eligible to trade on our platform. Please contact the customer service.
+    {% endif %}
+
+
+{% endautoescape %}
