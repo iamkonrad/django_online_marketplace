@@ -1,5 +1,5 @@
 from django import forms
-from .models import User
+from .models import User, UserProfile
 
 
 class UserForm(forms.ModelForm):
@@ -18,3 +18,9 @@ class UserForm(forms.ModelForm):
             raise forms.ValidationError(
                 "Passwords don't match!"
             )
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['profile_picture','cover_photo','address_line','address_line_1','address_line_2',
+                  'country','province','city','postcode','latitude','longitude']
