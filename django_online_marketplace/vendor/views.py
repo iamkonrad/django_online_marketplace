@@ -16,5 +16,7 @@ def vendorprofile(request):
     context = {
         'profile_form': profile_form,
         'vendor_form': vendor_form,
+        'profile': profile,
+        'vendor': vendor,
     }
-    return render(request,'vendor/vendorprofile.html')
+    return render(request,'vendor/vendorprofile.html', context)

@@ -20,7 +20,9 @@ class UserForm(forms.ModelForm):
             )
 
 class UserProfileForm(forms.ModelForm):
+    profile_picture = forms.FileField(widget=forms.FileInput(attrs={'class': 'btn-btn-info'}))
+    cover_picture = forms.FileField(widget=forms.FileInput(attrs={'class': 'btn-btn-info'}))
     class Meta:
         model = UserProfile
-        fields = ['profile_picture','cover_photo','address_line','address_line_1','address_line_2',
+        fields = ['profile_picture','cover_photo','address_line_1','address_line_2',
                   'country','province','city','postcode','latitude','longitude']

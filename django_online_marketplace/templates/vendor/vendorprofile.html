@@ -26,7 +26,7 @@
                             <h5 class="text-uppercase">Manage Your Profile</h5>
 									<!-- My Vendor Form Start -->
 									<form action="{% url 'vendorprofile' %}" method="POST" enctype="multipart/form-data">
-                                        {% csrf token %}
+                                        {% csrf_token %}
 										<div class="form-fields-set">
 											<ul>
 												<li>
@@ -38,7 +38,7 @@
 																		<li class="gal-img">
 																			<div class="drag-list">
 																				<div class="item-thumb">
-																					<img class="thumbnail" src="assets/extra-images/listing-logo18.png" alt="">
+																					<img class="thumbnail" src="{{profile.profile_picture.url}}" alt="logo">
 																				</div>
 																			</div>
 																		</li>
@@ -59,7 +59,7 @@
 																		<li class="gal-img">
 																			<div class="drag-list">
 																				<div class="item-thumb">
-																					<img class="thumbnail" src="assets/extra-images/cover-photo01.jpg" alt="">
+                                                                                    <img class="thumbnail" src="{{profile.cover_photo.url}}" alt="cover photo">
 																				</div>
 																			</div>
 																		</li>
@@ -81,7 +81,7 @@
 																		<li class="gal-img">
 																			<div class="drag-list">
 																				<div class="item-thumb">
-																					<img class="thumbnail" src="assets/extra-images/cover-photo01.jpg" alt="">
+                                                                                    <img class="thumbnail" src="{{vendor.vendor_license.url}}" alt="vendor's license">
 																				</div>
 																			</div>
 																		</li>
@@ -92,7 +92,6 @@
 																	<div class="upload-gallery">
                                                                         {{vendor_form.vendor_license}}
 																	</div>
-
 																</div>
 															</div>
 														</div>
@@ -118,6 +117,12 @@
 															<div class="field-holder">
 																<label>Country </label>
                                                                 {{profile_form.country}}
+															</div>
+														</div>
+                                                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+															<div class="field-holder">
+																<label>Country *</label>
+																{{profile_form.country}}
 															</div>
 														</div>
                                                              	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
