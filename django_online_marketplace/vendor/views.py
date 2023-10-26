@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from accounts.forms import UserProfileForm
 from accounts.models import UserProfile
 from accounts.views import check_role_vendor
-from menu.models import Category
+from menu.models import Category, Product
 from vendor.forms import VendorForm
 from vendor.models import Vendor
 from django.contrib import messages
@@ -48,3 +48,15 @@ def menu_builder(request):
     }
 
     return render(request,'vendor/menu_builder.html', context)
+
+def products_by_category(request, pk=None):
+    vendor = Vendor.objects.get(user=request.user)
+    category = get_object_or_404(Category,pk=pk)
+    products = Product.objects.filter(vendor=vendor,category=category)
+
+    context = {
+        'products': products,
+        'category': category,
+    }
+
+    return render(request,'vendor/products_by_category.html', context)
