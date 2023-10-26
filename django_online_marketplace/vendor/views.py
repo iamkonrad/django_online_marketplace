@@ -4,11 +4,13 @@ from django.shortcuts import render, get_object_or_404, redirect
 from accounts.forms import UserProfileForm
 from accounts.models import UserProfile
 from accounts.views import check_role_vendor
+from menu.forms import CategoryForm
 from menu.models import Category, Product
 from vendor.forms import VendorForm
 from vendor.models import Vendor
 from django.contrib import messages
 from .utils import get_vendor
+from django.template.defaultfilters import slugify
 
 
 
@@ -68,3 +70,23 @@ def products_by_category(request, pk=None):
     }
 
     return render(request,'vendor/products_by_category.html', context)
+
+
+def add_category(request):
+    if request.method == "POST":
+        form = CategoryForm(request.POST)
+        if form.is_valid:
+            category_name = form.cleaned_data['category_name']
+            category = form.save(commit=False)
+            category.vendor = get_vendor(request)
+            category.slug = slugify(category_name)
+            form.save()
+            messages.success(request,"Category has been added.")
+            return redirect ('menu_builder')
+    else:
+        form = CategoryForm()
+    context = {
+        'form':form,
+    }
+
+    return render(request, 'vendor/add_category.html', context)
