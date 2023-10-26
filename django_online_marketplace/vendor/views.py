@@ -71,18 +71,19 @@ def products_by_category(request, pk=None):
 
     return render(request,'vendor/products_by_category.html', context)
 
-
+@login_required(login_url='login')
+@user_passes_test(check_role_vendor)
 def add_category(request):
     if request.method == "POST":
         form = CategoryForm(request.POST)
-        if form.is_valid:
+        if form.is_valid():
             category_name = form.cleaned_data['category_name']
             category = form.save(commit=False)
             category.vendor = get_vendor(request)
             category.slug = slugify(category_name)
-            form.save()
+            category.save()
             messages.success(request,"Category has been added.")
-            return redirect ('menu_builder')
+            return redirect('menu-builder')
     else:
         form = CategoryForm()
     context = {

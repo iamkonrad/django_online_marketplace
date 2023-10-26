@@ -26,13 +26,13 @@
                             <h5 class="text-uppercase">Create Your Menu</h5>
                             <hr>
                             <h6>Add New Category</h6>
-                            <form action="{% url 'add-category' %}" method="POST">
-                                {{% csrf_token %}}
+                                    <form action="{% url 'add_category' %}" method="POST">
+                                {% csrf_token %}
                                 <div class="form-fields-set">
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12">
                                             <div class="field-holder">
-                                                <label> Category Nane (required)</label>
+                                                <label> Category Name (required)</label>
                                                 {{form.category_name}}
                                             </div>
                                         </div>
