@@ -8,6 +8,10 @@ from menu.models import Category, Product
 from vendor.forms import VendorForm
 from vendor.models import Vendor
 from django.contrib import messages
+from .utils import get_vendor
+
+
+
 
 @login_required(login_url='login')
 @user_passes_test(check_role_vendor)
@@ -39,8 +43,10 @@ def vendorprofile(request):
     }
     return render(request,'vendor/vendorprofile.html', context)
 
+@login_required(login_url='login')
+@user_passes_test(check_role_vendor)
 def menu_builder(request):
-    vendor = Vendor.objects.get(user=request.user)
+    vendor = get_vendor(request)
     categories = Category.objects.filter(vendor=vendor)
 
     context = {
@@ -49,8 +55,10 @@ def menu_builder(request):
 
     return render(request,'vendor/menu_builder.html', context)
 
+@login_required(login_url='login')
+@user_passes_test(check_role_vendor)
 def products_by_category(request, pk=None):
-    vendor = Vendor.objects.get(user=request.user)
+    vendor = get_vendor(request)
     category = get_object_or_404(Category,pk=pk)
     products = Product.objects.filter(vendor=vendor,category=category)
 
