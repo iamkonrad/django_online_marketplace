@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from accounts.forms import UserProfileForm
 from accounts.models import UserProfile
 from accounts.views import check_role_vendor
-from menu.forms import CategoryForm
+from menu.forms import CategoryForm, ProductForm
 from menu.models import Category, Product
 from vendor.forms import VendorForm
 from vendor.models import Vendor
@@ -43,6 +43,7 @@ def vendorprofile(request):
         'profile': profile,
         'vendor': vendor,
     }
+
     return render(request,'vendor/vendorprofile.html', context)
 
 @login_required(login_url='login')
@@ -86,6 +87,7 @@ def add_category(request):
             return redirect('menu-builder')
     else:
         form = CategoryForm()
+
     context = {
         'form':form,
     }
@@ -106,10 +108,12 @@ def edit_category(request,pk=None ):
             return redirect('menu-builder')
     else:
         form = CategoryForm(instance=category)
+
     context = {
         'form':form,
         'category':category,
     }
+
     return render(request, 'vendor/edit_category.html', context)
 
 def delete_category(request, pk=None):
@@ -117,3 +121,24 @@ def delete_category(request, pk=None):
     category.delete()
     messages.success(request, "Category has been deleted.")
     return redirect('menu_builder')
+
+
+def add_product(request):
+    if request.method == "POST":
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            product_title = form.cleaned_data['product_title']
+            product = form.save(commit=False)
+            product.vendor = get_vendor(request)
+            product.slug = slugify(product_title)
+            product.save()
+            messages.success(request, "Product has been added.")
+            return redirect('menu_builder')
+    else:
+        form = ProductForm()
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'vendor/add_product.html', context)
