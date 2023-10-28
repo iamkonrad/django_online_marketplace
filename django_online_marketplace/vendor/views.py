@@ -94,6 +94,8 @@ def add_category(request):
 
     return render(request, 'vendor/add_category.html', context)
 
+@login_required(login_url='login')
+@user_passes_test(check_role_vendor)
 def edit_category(request,pk=None ):
     category = get_object_or_404(Category,pk=pk)
     if request.method == "POST":
@@ -116,16 +118,19 @@ def edit_category(request,pk=None ):
 
     return render(request, 'vendor/edit_category.html', context)
 
+@login_required(login_url='login')
+@user_passes_test(check_role_vendor)
 def delete_category(request, pk=None):
     category=get_object_or_404(Category,pk=pk)
     category.delete()
     messages.success(request, "Category has been deleted.")
     return redirect('menu_builder')
 
-
+@login_required(login_url='login')
+@user_passes_test(check_role_vendor)
 def add_product(request):
     if request.method == "POST":
-        form = ProductForm(request.POST)
+        form = ProductForm(request.POST,request.FILES)
         if form.is_valid():
             product_title = form.cleaned_data['product_title']
             product = form.save(commit=False)
@@ -133,7 +138,7 @@ def add_product(request):
             product.slug = slugify(product_title)
             product.save()
             messages.success(request, "Product has been added.")
-            return redirect('menu_builder')
+            return redirect('products_by_category', product.category.id)
     else:
         form = ProductForm()
 

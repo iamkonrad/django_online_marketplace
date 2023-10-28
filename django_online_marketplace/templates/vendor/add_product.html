@@ -28,7 +28,7 @@
                                      <button class="btn btn-secondary" onclick="history.back()">Go back<i class="fa fa-angle-left" aria-hidden="true"></i></button>
                                 <br><br>
                             <h6>Add New Product</h6>
-                                    <form action="{% url 'add_product' %}" method="POST">
+                                    <form action="{% url 'add_product' %}" method="POST" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <div class="form-fields-set">
                                     <div class="row">
