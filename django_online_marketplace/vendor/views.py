@@ -173,3 +173,11 @@ def edit_product(request, pk=None):
 
     return render(request, 'vendor/edit_product.html', context)
 
+
+@login_required(login_url='login')
+@user_passes_test(check_role_vendor)
+def delete_product(request, pk=None):
+    product=get_object_or_404(Product,pk=pk)
+    product.delete()
+    messages.success(request, "Product has been deleted.")
+    return redirect('products_by_category', product.category.id)
