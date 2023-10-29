@@ -147,3 +147,29 @@ def add_product(request):
     }
 
     return render(request, 'vendor/add_product.html', context)
+
+
+@login_required(login_url='login')
+@user_passes_test(check_role_vendor)
+def edit_product(request, pk=None):
+    product = get_object_or_404(Product, pk=pk)
+    if request.method == "POST":
+        form = ProductForm(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            product_title = form.cleaned_data['product_title']
+            product = form.save(commit=False)
+            product.vendor = get_vendor(request)
+            product.slug = slugify(product_title)
+            product.save()
+            messages.success(request, "Product has been updated.")
+            return redirect('products_by_category',product.category.id)
+    else:
+        form = ProductForm(instance=product)
+
+    context = {
+        'form': form,
+        'product': product,
+    }
+
+    return render(request, 'vendor/edit_product.html', context)
+
