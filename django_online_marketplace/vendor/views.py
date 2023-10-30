@@ -141,7 +141,7 @@ def add_product(request):
             return redirect('products_by_category', product.category.id)
     else:
         form = ProductForm()
-
+        form.fields['category'].queryset = Category.objects.filter(vendor=get_vendor(request))
     context = {
         'form': form,
     }
@@ -165,6 +165,7 @@ def edit_product(request, pk=None):
             return redirect('products_by_category',product.category.id)
     else:
         form = ProductForm(instance=product)
+        form.fields['category'].queryset = Category.objects.filter(vendor=get_vendor(request))
 
     context = {
         'form': form,
