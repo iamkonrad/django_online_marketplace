@@ -10,6 +10,7 @@ from .forms import UserForm
 from .utils import detectuser, send_verification_email
 from .models import User, UserProfile
 from django.contrib import messages, auth
+from django.template.defaultfilters import slugify
 
 def check_role_vendor(user):
     if user.role == 1:
@@ -76,6 +77,8 @@ def registervendor(request):
             user.save()
             vendor = vendor_form.save(commit=False)
             vendor.user = user
+            vendor_name = vendor_form.cleaned_data['vendor_name']
+            vendor.vendor_slug = slugify(vendor_name)+ '_'+str(user.id)
             user_profile = UserProfile.objects.get(user=user)
             vendor.user_profile = user_profile
             vendor.save()
