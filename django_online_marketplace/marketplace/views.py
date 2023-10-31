@@ -1,5 +1,7 @@
+from django.db.models import Prefetch
 from django.shortcuts import render, get_object_or_404
 
+from menu.models import Category, Product
 from vendor.models import Vendor
 
 
@@ -13,9 +15,19 @@ def marketplace (request):
     }
     return render(request, 'marketplace/listings.html', context)
 
+
 def vendor_detail(request, vendor_slug):
-    vendor = get_object_or_404(Vendor,vendor_slug)
+    vendor = get_object_or_404(Vendor, vendor_slug=vendor_slug)
+
+    categories = Category.objects.filter(vendor=vendor).prefetch_related(
+        Prefetch(
+            'product',
+            queryset=Product.objects.filter(is_available=True)
+        )
+    )
+
     context = {
-        'vendor':vendor,
+        'vendor': vendor,
+        'categories': categories,
     }
-    return render (request, 'marketplace/vendor_detail.html',context)
+    return render(request, 'marketplace/vendor_detail.html', context)
