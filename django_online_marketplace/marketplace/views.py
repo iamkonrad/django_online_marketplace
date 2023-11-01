@@ -1,5 +1,6 @@
 from django.db.models import Prefetch
 from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse
 
 from menu.models import Category, Product
 from vendor.models import Vendor
@@ -31,3 +32,6 @@ def vendor_detail(request, vendor_slug):
         'categories': categories,
     }
     return render(request, 'marketplace/vendor_detail.html', context)
+
+def add_to_cart(request, product_id):
+    return HttpResponse('Testing')
