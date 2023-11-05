@@ -5,7 +5,7 @@ class Category(models.Model):
     vendor = models.ForeignKey(Vendor, on_delete = models.CASCADE)
     category_name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(max_length=100,unique=True)
-    description = models.TextField(max_length=250, blank = True)
+    description = models.TextField(max_length=250, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -22,7 +22,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     vendor = models.ForeignKey(Vendor,on_delete=models.CASCADE)
-    category = models.ForeignKey(Category,on_delete=models.CASCADE,related_name = 'product')
+    category = models.ForeignKey(Category,on_delete=models.CASCADE,related_name='product')
     product_title = models.CharField(max_length=50)
     slug = models.SlugField(max_length=100,unique=True)
     description = models.TextField(max_length=250,blank=True)
@@ -31,8 +31,6 @@ class Product(models.Model):
     is_available = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-
 
     def __str__(self):
         return self.product_title

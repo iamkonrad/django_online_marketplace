@@ -33,4 +33,3 @@ class Vendor(models.Model):
                     mail_subject = "You are not eligible to trade on our platform. Please contact the customer service."
                     send_notification(mail_subject,mail_template,context)
         return super(Vendor,self).save(*args,**kwargs)
-

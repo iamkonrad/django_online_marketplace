@@ -43,20 +43,20 @@ def vendor_detail(request, vendor_slug):
 
 
 def add_to_cart(request, product_id):
-    if request.user.is_authenticated:
-        if request.is_ajax():
+    if request.is_ajax:
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             try:
                 product = Product.objects.get(id=product_id)
                 try:
-                    checkCart = Cart.objects.get(user=request.user,product=product)
-                    checkCart.quantity += 1
-                    checkCart.save()
+                    check_cart = Cart.objects.get(user=request.user,product=product)
+                    check_cart.quantity += 1
+                    check_cart.save()
                     return JsonResponse({'status': 'Success', 'message': 'Cart quantity has been increased.',
-                                         'cart_counter': get_cart_counter(request), 'qty':checkCart.quantity})
+                                         'cart_counter': get_cart_counter(request), 'qty':check_cart.quantity})
                 except:
-                    checkCart = Cart.objects.create(user=request.user,product=product, quantity=1)
+                    check_cart = Cart.objects.create(user=request.user,product=product, quantity=1)
                     return JsonResponse({'status': 'Success', 'message': 'The product has been added to the cart.',
-                                         'cart_counter':get_cart_counter(request), 'qty':checkCart.quantity})
+                                         'cart_counter':get_cart_counter(request), 'qty':check_cart.quantity})
 
             except:
                 return JsonResponse({'status': 'Failed', 'message': 'This product does not exist.'})
@@ -65,3 +65,30 @@ def add_to_cart(request, product_id):
             return JsonResponse({'status': 'Failed', 'message': 'Invalid request.'})
     else:
         return JsonResponse({'status':'Failed', 'message':'Please login to continue.'})
+
+def decrease_cart(request, product_id):
+    if request.user.is_authenticated:
+        if request.is_ajax():
+            try:
+                product = Product.objects.get(id=product_id)
+                try:
+                    check_cart = Cart.objects.get(user=request.user, product=product)
+                    if check_cart.quantity >1:
+
+                        check_cart.quantity -= 1
+                        check_cart.save()
+                    else:
+                        check_cart.delete()
+                        check_cart.quantity = 0
+                    return JsonResponse({'status': 'Success',
+                                         'cart_counter': get_cart_counter(request), 'qty': check_cart.quantity})
+                except:
+                    return JsonResponse({'status': 'Failed', 'message': 'This product does not exist in your cart.'})
+
+            except:
+                return JsonResponse({'status': 'Failed', 'message': 'This product does not exist.'})
+
+        else:
+            return JsonResponse({'status': 'Failed', 'message': 'Invalid request.'})
+    else:
+        return JsonResponse({'status': 'Failed', 'message': 'Please login to continue.'})
