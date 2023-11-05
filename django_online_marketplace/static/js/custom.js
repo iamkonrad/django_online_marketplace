@@ -9,7 +9,6 @@
 
 
 
-
 $(document).ready(function(){
     $('.add_to_cart').on('click',function(e) {
         e.preventDefault();
@@ -26,7 +25,10 @@ $(document).ready(function(){
             url:url,
             data: data,
             success: function(response){
-                alert(response)
+                console.log(response)
+                $('#cart_counter').html(response.cart_counter['cart_count']);
+                $('#qty-'+product_id).html(response.qty);
+
             }
         })
     })
@@ -37,4 +39,6 @@ $(document).ready(function(){
         var qty = $(this).attr('data-qty')
         $('#' + the_id).html(qty)
     })
+
+
 });
