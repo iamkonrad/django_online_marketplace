@@ -43,7 +43,7 @@ def vendor_detail(request, vendor_slug):
 
 
 def add_to_cart(request, product_id):
-    if request.is_ajax:
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             try:
                 product = Product.objects.get(id=product_id)
@@ -68,7 +68,7 @@ def add_to_cart(request, product_id):
 
 def decrease_cart(request, product_id):
     if request.user.is_authenticated:
-        if request.is_ajax():
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             try:
                 product = Product.objects.get(id=product_id)
                 try:
