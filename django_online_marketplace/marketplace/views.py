@@ -43,7 +43,7 @@ def vendor_detail(request, vendor_slug):
 
 
 def add_to_cart(request, product_id):
-    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+    if request.user.is_authenticated:
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             try:
                 product = Product.objects.get(id=product_id)
@@ -64,7 +64,7 @@ def add_to_cart(request, product_id):
         else:
             return JsonResponse({'status': 'Failed', 'message': 'Invalid request.'})
     else:
-        return JsonResponse({'status':'Failed', 'message':'Please login to continue.'})
+        return JsonResponse({'status':'login_required', 'message':'Please login to continue.'})
 
 def decrease_cart(request, product_id):
     if request.user.is_authenticated:
@@ -91,4 +91,4 @@ def decrease_cart(request, product_id):
         else:
             return JsonResponse({'status': 'Failed', 'message': 'Invalid request.'})
     else:
-        return JsonResponse({'status': 'Failed', 'message': 'Please login to continue.'})
+        return JsonResponse({'status': 'login_required', 'message': 'Please login to continue.'})
