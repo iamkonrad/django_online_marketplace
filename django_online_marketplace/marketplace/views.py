@@ -94,7 +94,8 @@ def decrease_cart(request, product_id):
         return JsonResponse({'status': 'login_required', 'message': 'Please login to continue.'})
 
 def cart(request):
+    cart_items = Cart.objects.filter(user=request.user)
     context = {
-
+        'cart_items':cart_items,
     }
     return render(request, 'marketplace/cart.html',context )
