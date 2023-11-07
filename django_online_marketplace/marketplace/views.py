@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.db.models import Prefetch
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
@@ -93,6 +94,7 @@ def decrease_cart(request, product_id):
     else:
         return JsonResponse({'status': 'login_required', 'message': 'Please login to continue.'})
 
+@login_required(login_url = 'login')
 def cart(request):
     cart_items = Cart.objects.filter(user=request.user)
     context = {
