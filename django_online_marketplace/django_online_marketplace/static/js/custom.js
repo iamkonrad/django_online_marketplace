@@ -86,6 +86,7 @@ $(document).ready(function () {
                     swal(response.status,response.message, "success")
 
                     removeCartItem(0,cart_id)
+                    checkEmptyCart();
                 }
             }
         })
@@ -95,6 +96,14 @@ $(document).ready(function () {
     function removeCartItem(cartItemQty, cart_id){
         if(cartItemQty <= 0){
             document.getElementById("cart-item"+cart_id).remove()
+        }
+    }
+
+    // check if the cart is empty
+    function checkEmptyCart(){
+        var cart_counter = document.getElementById('cart_counter').innerHTML
+        if(cart_counter ===0){
+            document.getElementById("empty-cart").style.display = "block";
         }
     }
 });
