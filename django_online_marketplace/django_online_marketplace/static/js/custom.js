@@ -89,8 +89,11 @@ $(document).ready(function () {
                     $('#cart_counter').html(response.cart_counter['cart_count']);
                     swal(response.status,response.message, "success")
 
+                    if(window.location.pathname == '/cart/'){
                     removeCartItem(0, cart_id);
                     checkEmptyCart();
+                    }
+
                 }
             }
         })
