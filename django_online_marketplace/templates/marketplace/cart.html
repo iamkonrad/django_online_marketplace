@@ -35,6 +35,7 @@
 															<div class="text-holder">
 																<h6>{{ item.product }}</h6>
 																<span>{{ item.product.description }}</span>
+                                                                <a href="{% url 'vendor_detail' item.product.vendor.vendor_slug %}" class="badge badge-warning"> {{ item.product.vendor }} </a>
 															</div>
 															<div class="price-holder">
 																<span class="price">$ {{item.product.price}}</span>
