@@ -16,12 +16,13 @@ def get_cart_counter(request):
             cart_count = 0
     return dict(cart_count=cart_count)
 
+
 def get_cart_amount(request):
     subtotal = 0
     tax = 0
     grand_total = 0
     if request.user.is_authenticated:
-        cart_items = Cart.objects.user
+        cart_items = Cart.objects.filter(user=request.user)
         for item in cart_items:
             product = Product.objects.get(pk=item.product.id)
             subtotal += (product.price * item.quantity)
