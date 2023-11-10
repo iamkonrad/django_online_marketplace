@@ -1,6 +1,8 @@
 from django.db import models
 from accounts.models import User, UserProfile
 from accounts.utils import send_notification
+from django_countries.fields import CountryField
+
 
 
 
@@ -10,6 +12,10 @@ class Vendor(models.Model):
     vendor_name = models.CharField(max_length=50)
     vendor_slug = models.SlugField(max_length=100, unique = True)
     vendor_license = models.ImageField(upload_to='vendor/license')
+    country= CountryField(blank_label='(select a country)')
+    province = models.CharField(max_length=200, blank=True, null=True)
+    city = models.CharField(max_length=200)
+    address = models. CharField(max_length=300)
     is_approved = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)

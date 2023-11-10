@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.db.models import Prefetch
+from django.db.models import Prefetch, Q
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 
@@ -119,7 +119,9 @@ def delete_cart(request, cart_id):
 def search(request):
     keyword = request.GET['keyword']
 
-    vendors = Vendor.objects.filter(vendor_name__icontains=keyword, is_approved=True, user__is_active=True)
+    fetch_vendors_by_products = Product.objects.filter(product_title__icontains=keyword, is_available=True).values_list('vendor',flat=True)
+    vendors = Vendor.objects.filter(Q(id__in=fetch_vendors_by_products)| Q(vendor_name__icontains=keyword, is_approved=True, user__is_active=True))
+
     vendors_count=vendors.count()
 
     context = {
