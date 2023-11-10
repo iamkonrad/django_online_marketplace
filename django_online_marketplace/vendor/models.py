@@ -1,8 +1,7 @@
 from django.db import models
 from accounts.models import User, UserProfile
 from accounts.utils import send_notification
-from django_countries.fields import CountryField
-
+from datetime import time
 
 
 
@@ -35,3 +34,28 @@ class Vendor(models.Model):
                     mail_subject = "You are not eligible to trade on our platform. Please contact the customer service."
                     send_notification(mail_subject,mail_template,context)
         return super(Vendor,self).save(*args,**kwargs)
+
+DAYS = [
+    (1, ("Monday")),
+    (2, ("Tuesday")),
+    (3, ("Wednesday")),
+    (4, ("Thursday")),
+    (5, ("Friday")),
+    (6, ("Saturday")),
+    (7, ("Sunday")),
+]
+
+HOURS_OF_THE_DAY= [
+    (time(hours,minutes).strftime('%I:%M %p'), time(hours,minutes).strftime('%I:%M %p')) for hours in range(0,24) for minutes in (0,30)
+]
+
+class OpeningHours(models.Model):
+    vendor = models.ForeignKey(Vendor,on_delete=models.CASCADE)
+    day = models.IntegerField(choices=DAYS)
+    from_hour = models.CharField(choices=HOURS_OF_THE_DAY, max_length=15, blank=True)
+    to_hour = models.CharField(choices=HOURS_OF_THE_DAY, max_length=15, blank=True)
+    is_closed = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ('day', 'from_hour')
+        unique_together = ('day', 'from_hour', 'to_hour')
