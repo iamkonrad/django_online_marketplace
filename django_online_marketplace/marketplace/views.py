@@ -116,3 +116,15 @@ def delete_cart(request, cart_id):
         else:
             return JsonResponse({'status': 'Failed', 'message': 'Invalid request.', })
 
+def search(request):
+    keyword = request.GET['keyword']
+
+    vendors = Vendor.objects.filter(vendor_name__icontains=keyword, is_approved=True, user__is_active=True)
+    vendors_count=vendors.count()
+
+    context = {
+        'vendors':vendors,
+        'vendors_count':vendors_count,
+    }
+
+    return render(request, 'marketplace/listings.html',context)
