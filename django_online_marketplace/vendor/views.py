@@ -183,3 +183,6 @@ def delete_product(request, pk=None):
     product.delete()
     messages.success(request, "Product has been deleted.")
     return redirect('products_by_category', product.category.id)
+
+def opening_hours(request):
+    return render(request, 'vendor/opening_hours.html')

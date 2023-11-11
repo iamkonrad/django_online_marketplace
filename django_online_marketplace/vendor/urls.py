@@ -19,4 +19,5 @@ urlpatterns = [
     path('menu-builder/product/edit/<int:pk>/', views.edit_product, name='edit_product'),
     path('menu-builder/product/delete/<int:pk>/', views.delete_product, name='delete_product'),
 
+    path('opening-hours/',views.opening_hours, name='opening_hours'),
 ]
