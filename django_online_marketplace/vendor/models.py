@@ -57,5 +57,10 @@ class OpeningHours(models.Model):
     is_closed = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ('day', 'from_hour')
+        ordering = ('day', '-from_hour')
         unique_together = ('day', 'from_hour', 'to_hour')
+        verbose_name = 'OpeningHours'
+        verbose_name_plural='OpeningHours'
+
+    def __str__(self):
+        return self.get_day_display()

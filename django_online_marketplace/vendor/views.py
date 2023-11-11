@@ -6,8 +6,8 @@ from accounts.models import UserProfile
 from accounts.views import check_role_vendor
 from menu.forms import CategoryForm, ProductForm
 from menu.models import Category, Product
-from vendor.forms import VendorForm
-from vendor.models import Vendor
+from vendor.forms import VendorForm, OpeningHoursForm
+from vendor.models import Vendor, OpeningHours
 from django.contrib import messages
 from .utils import get_vendor
 from django.template.defaultfilters import slugify
@@ -185,4 +185,10 @@ def delete_product(request, pk=None):
     return redirect('products_by_category', product.category.id)
 
 def opening_hours(request):
-    return render(request, 'vendor/opening_hours.html')
+    opening_hours = OpeningHours.objects.filter(vendor=get_vendor(request))
+    form = OpeningHoursForm()
+    context = {
+        'form':form,
+        'opening_hours':opening_hours,
+    }
+    return render(request, 'vendor/opening_hours.html',context)
