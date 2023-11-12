@@ -206,9 +206,13 @@ def add_opening_hours(request):
             try:
                 hour = OpeningHours.objects.create(vendor=get_vendor(request), day=day, from_hour=from_hour,
                                                    to_hour=to_hour, is_closed=is_closed)
-                response = {'status':'success'}
-                return JsonResponse(response)
-
+                if hour:
+                    day=OpeningHours.objects.get(id=hour.id)
+                    if day.is_closed:
+                        response = {'status':'success', 'id':hour.id, 'day':day.get_day_display(),'is_closed':'Closed'}
+                    else:
+                        response = {'status':'success', 'id':hour.id, 'day':day.get_day_display(),'from_hour':hour.from_hour,'to_hour':hour.to_hour}
+                    return JsonResponse(response)
 
             except IntegrityError as e:
                 response = {'status':'failed'}

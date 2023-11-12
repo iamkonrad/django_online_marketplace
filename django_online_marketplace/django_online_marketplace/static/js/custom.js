@@ -156,7 +156,7 @@ $(document).ready(function () {
 
         console.log(day,from_hour,to_hour,is_closed,csrf_token)
 
-        if(is_clsed){
+        if(is_closed){
             is_closed = 'True'
             condition = "day != ''"
         }else{
@@ -176,7 +176,12 @@ $(document).ready(function () {
                 },
                 success: function(response){
                     if(response.status =='success'){
-                        html = '<tr><td><b>' + response.day + '</b></td><td>' + response.from_hour + ' - ' + response.to_hour + '</td><td><a href="#">Remove</a></td></tr>'
+                        if(response.is_closed == 'Closed'){
+                            html = '<tr><td><b>' + response.day + '</b></td><td>Closed</td><td><a href="#">Remove</a></td></tr>'
+                        }else{
+                            html = '<tr><td><b>' + response.day + '</b></td><td>' + response.from_hour + ' - ' + response.to_hour + '</td><td><a href="#">Remove</a></td></tr>'
+                        }
+
                         $(".opening_hours").append(html)
                         document.getElementById("opening_hours").reset();
                     }else{
@@ -187,7 +192,7 @@ $(document).ready(function () {
         }else{
             swal('Please fill all the fields.','','info')
         }
-    })
+    });
 
     //document ready
 });
