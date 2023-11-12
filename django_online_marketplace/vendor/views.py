@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 
 from accounts.forms import UserProfileForm
@@ -12,6 +12,7 @@ from vendor.models import Vendor, OpeningHours
 from django.contrib import messages
 from .utils import get_vendor
 from django.template.defaultfilters import slugify
+from django.db import IntegrityError
 
 
 
@@ -195,4 +196,22 @@ def opening_hours(request):
     return render(request, 'vendor/opening_hours.html',context)
 
 def add_opening_hours(request):
-    return HttpResponse('Add opening hours')
+    if request.user.is_authenticated:
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest' and request.method == 'POST':
+            day = request.POST.get('day')
+            from_hour = request.POST.get('from_hour')
+            to_hour = request.POST.get('to_hour')
+            is_closed = request.POST.get('is_closed')
+
+            try:
+                hour = OpeningHours.objects.create(vendor=get_vendor(request), day=day, from_hour=from_hour,
+                                                   to_hour=to_hour, is_closed=is_closed)
+                response = {'status':'success'}
+                return JsonResponse(response)
+
+
+            except IntegrityError as e:
+                response = {'status':'failed'}
+                return JsonResponse(response)
+    else:
+       HttpResponse('Invalid request')
