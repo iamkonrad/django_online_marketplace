@@ -193,6 +193,20 @@ $(document).ready(function () {
             swal('Please fill all the fields.','','info')
         }
     });
+    //REMOVE OPENING HOUR
+$('.remove_hour').on('click',function(e){
+    e.preventDefault();
+    url = $(this).attr('data-url');
+
+    $.ajax({
+        type:'GET',
+        url:url,
+        success:function(response){
+            console.log(response)
+        }
+    })
+})
+
 
     //document ready
 });
