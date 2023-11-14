@@ -5,7 +5,7 @@
 
 		<!-- Main Section Start -->
 		<div class="main-section">
-			<div class="page-section nopadding cs-nomargin" style="margin-top: 0px;padding-top: 80px;padding-bottom: 60px;margin-bottom: 0px;background: url(assets/extra-images/banner-img-2.jpg) no-repeat center top / cover;">
+			<div class="page-section nopadding cs-nomargin" style="margin-top: 0px;padding-top: 80px;padding-bottom: 60px;margin-bottom: 0px;">
 				<!-- Container Start -->
 				<div class="container ">
 					<div class="row">
@@ -117,7 +117,7 @@
 														<li>
 															<div class="checkbox">
 																<input type="checkbox" id="foodbakery_restaurant_category_2" class="foodbakery_restaurant_category" value="apple-juice">
-																<label for="foodbakery_restaurant_category_2">BB.Q</label>
+																<label for="foodbakery_restaurant_category_2">BBQ</label>
 																<span>(2)</span>
 															</div>
 														</li>
@@ -148,7 +148,7 @@
 														<li>
 															<div class="checkbox">
 																<input type="checkbox" id="foodbakery_restaurant_category_6" class="foodbakery_restaurant_category" value="apple-juice">
-																<label for="foodbakery_restaurant_category_6">Cheicken
+																<label for="foodbakery_restaurant_category_6">Chicken
 																	Roast</label>
 																<span>(2)</span>
 															</div>
@@ -255,7 +255,12 @@
                                                             {% endif %}
                                                         </a>
 													</figure>
-													<span class="restaurant-status close"><em class="bookmarkRibbon"></em>Close</span>
+                                                {% if vendor.is_open %}
+													<span class="restaurant-status open"><em class="bookmarkRibbon"></em>Open</span>
+                                                {% else %}
+                                                    <span class="restaurant-status close"><em class="bookmarkRibbon"></em>Closed</span>
+                                                {% endif %}
+
 												</div>
 												<div class="text-holder">
 
