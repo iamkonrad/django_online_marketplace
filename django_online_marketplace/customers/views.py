@@ -23,8 +23,6 @@ def customer_profile(request):
         profile_form = UserProfileForm(instance = profile)
         user_form = UserInfoForm(instance = request.user)
 
-
-
     context = {
         'profile_form':profile_form,
         'user_form':user_form,

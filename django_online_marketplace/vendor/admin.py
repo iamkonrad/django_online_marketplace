@@ -12,5 +12,3 @@ class OpeningHoursAdmin(admin.ModelAdmin):
 
 admin.site.register(Vendor, VendorAdmin)
 admin.site.register(OpeningHours)
-
-
