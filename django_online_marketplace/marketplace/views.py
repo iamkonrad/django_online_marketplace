@@ -141,3 +141,6 @@ def search(request):
     }
 
     return render(request, 'marketplace/listings.html',context)
+
+def checkout(request):
+    return render(request, 'marketplace/checkout.html')
