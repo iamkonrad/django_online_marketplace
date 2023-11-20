@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from marketplace.context_processors import get_cart_counter, get_cart_amount
 from marketplace.models import Cart
 from menu.models import Category, Product
+from orders.forms import OrderForm
 from vendor.models import Vendor, OpeningHours
 
 from datetime import date, datetime
@@ -143,4 +144,8 @@ def search(request):
     return render(request, 'marketplace/listings.html',context)
 
 def checkout(request):
-    return render(request, 'marketplace/checkout.html')
+    form = OrderForm
+    context = {
+        'form':form,
+    }
+    return render(request, 'marketplace/checkout.html', context)

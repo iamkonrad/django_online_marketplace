@@ -27,6 +27,50 @@
 
 												<div id="menu-item-list-6272" class="menu-itam-list">
 
+                                                    <form action="#" method="POST">
+                                                        {% csrf_token %}
+
+                                                        <div class="row">
+                                                            <div class="form-group col=md-6.col-sm-12 col-lg-6">
+                                                                First Name: {{ form.first_name }}
+                                                            </div>
+                                                                <div class="form-group col=md-6.col-sm-12 col-lg-6">
+                                                                Last Name: {{ form.last_name }}
+                                                            </div>
+                                                        </div>
+
+                                                             <div class="row">
+                                                            <div class="form-group col=md-6.col-sm-12 col-lg-6">
+                                                                Phone Number: {{ form.phone }}
+                                                            </div>
+                                                                <div class="form-group col=md-6.col-sm-12 col-lg-6">
+                                                                Email Address: {{ form.email }}
+                                                            </div>
+                                                        </div>
+
+                                                         <div class="row">
+                                                            <div class="form-group col=md-12.col-sm-12 col-lg-12">
+                                                                Address: {{ form.address }}
+                                                            </div>
+                                                         </div>
+
+                                                                  <div class="row">
+                                                            <div class="form-group col=md-6.col-sm-12 col-lg-6">
+                                                                Country: {{ form.country }}
+                                                            </div>
+                                                                <div class="form-group col=md-6.col-sm-12 col-lg-6">
+                                                                Province: {{ form.province }}
+                                                            </div>
+                                                        </div>
+
+                                                                      <div class="row">
+                                                            <div class="form-group col=md-6.col-sm-12 col-lg-6">
+                                                                City: {{ form.city }}
+                                                            </div>
+                                                                <div class="form-group col=md-6.col-sm-12 col-lg-6">
+                                                                Postal Code: {{ form.postal_code }}
+                                                            </div>
+                                                        </div>
 
 
 												</div>
@@ -81,8 +125,10 @@
                                                             </span>
                                                         </li>
 
-                                                    <a href="{% url 'checkout' %}" class="btn btn-danger w-110 p- mt-32">PROCEED TO CHECKOUT</a>
+                                                    <button type="submit" class="btn btn-danger w-110 p- mt-32">PLACE ORDER</button>
                                                     </ul>
+
+                                                </form>
                                                 </div>
 											</div>
 										</div>
