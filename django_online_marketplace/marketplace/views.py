@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.db.models import Prefetch, Q
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 
 from marketplace.context_processors import get_cart_counter, get_cart_amount
@@ -144,8 +144,14 @@ def search(request):
     return render(request, 'marketplace/listings.html',context)
 
 def checkout(request):
+    cart_items = Cart.objects.filter(user=request.user).order_by('created_at')
+    cart_count = cart_items.count()
+    if cart_count <=0:
+        return redirect('marketplace')
+
     form = OrderForm
     context = {
         'form':form,
+        'cart_items':cart_items,
     }
     return render(request, 'marketplace/checkout.html', context)

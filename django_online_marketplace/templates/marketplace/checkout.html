@@ -95,6 +95,40 @@
 										<div id="home" class="tab-pane in active">
 											<div class="menu-itam-holder">
 
+                                                <div id="menu-item-list-6272" class="menu-itam-list">
+
+													<ul>
+                                                            {% for item in cart_items %}
+														<li id="cart-item{{item.id}}">
+															<div class="image-holder"> <img src=" {{item.product.image.url}}" alt=""></div>
+															<div class="text-holder">
+																<h6>{{ item.product }}</h6>
+																<span>{{ item.product.description }}</span>
+                                                                <a href="{% url 'vendor_detail' item.product.vendor.vendor_slug %}" class="badge badge-warning"> {{ item.product.vendor }} </a>
+															</div>
+
+                                                            <div class="quantity" style="display: inline-block; position: absolute; top:50%; transform:translateY(-50%);margin-top: -10px;">
+                                                                <span>{{ item.quantity }} x </span>
+                                                            </div>
+
+															<div class="price-holder">
+																<span class="price">$ {{item.product.price}}</span>
+                             <!--                               <a href="#" class="decrease_cart" data-id="{{ item.product.id }}" id="{{item.id}}" data-url="{% url 'decrease_cart' item.product.id %}"
+                                                                    style="margin-right: 28px;"><i class="icon-minus text-color"></i></a> -->
+
+
+                             <!--                               <a href="#" class="add_to_cart" data-id="{{ item.product.id }}" data-url="{% url 'add_to_cart' item.product.id %}"><i class="icon-plus4 text-color"></i></a>    -->
+                             <!--                               <a href="#" class="delete_cart" data-id="{{ item.id }}" data-url="{% url 'delete_cart' item.id %}"><i class="icon-delete text-color"></i></a>                   -->
+
+															</div>
+														</li>
+                                                        {% endfor %}
+
+
+													</ul>
+
+												</div>
+
                                                 <div>
                                                     <ul>
                                                         <li style="list-style-type: none;">
@@ -128,14 +162,16 @@
                                                     <button type="submit" class="btn btn-danger w-110 p- mt-32">PLACE ORDER</button>
                                                     </ul>
 
-                                                </form>
                                                 </div>
+                                                </form>
+
 											</div>
 										</div>
 
 									</div>
 								</div>
 							</div>
+
 
 						</div>
 					</div>
